@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>"MIDI RTL" Demo</title>
+
+        <!-- Infusion dependencies -->
+        <script src="./node_modules/infusion/dist/infusion-all.js"></script>
+
+        <!-- Flocking dependencies -->
+        <script src="./node_modules/flocking/dist/flocking-all.js"></script>
+        <script src="./node_modules/flocking/src/ui/selectbox/js/selectbox.js"></script>
+
+        <script src="./node_modules/flocking/src/ui/midi/midi-port-selector/js/midi-port-selector.js"></script>
+        <script src="./node_modules/flocking/src/ui/midi/midi-connector/js/midi-connector.js"></script>
+
+        <script src="./src/js/midi-rtl.js"></script>
+
+        <link rel="stylesheet" href="./node_modules/foundation-sites/dist/css/foundation.css"/>
+    </head>
+
+    <body>
+        <div class="midi-rtl-container">
+            <div class="grid-x grid-padding-x grid-margin-x">
+                <div class="cell medium-5 small-10">
+                    <div id="input-selector"></div>
+                </div>
+                <div class="cell medium-6 small-12">
+                    <div id="output-selector"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var midiRtlComponent = midiRtl(".midi-rtl-container");
+        </script>
+    </body>
+</html>
