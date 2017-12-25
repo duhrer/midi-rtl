@@ -1,0 +1,8 @@
+.mode-selector.active {
+    border: 2px solid red;
+    border-radius: 5%;
+}
+
+.mode-selector {
+    padding: 2em;
+}

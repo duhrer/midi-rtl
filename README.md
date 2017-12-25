@@ -1,3 +1,5 @@
+![Image of midi connector connected to "evil mirror universe" connector](./src/images/rtl.png)
+
 # MIDI "Right to Left"
 
 Pianos and piano-like instruments play higher notes the further right your hands move.  This project provides a
@@ -18,4 +20,10 @@ something that would let me "flip" the direction on [a ribbon controller like th
 2. Run `npm install` from the repository root.
 3. Open `index.html` in a browser that supports [the WebMIDI API](https://www.w3.org/TR/webmidi/).
 4. Select your MIDI input and output.
-5. Play notes.
+5. Play some notes.
+
+The author's suggestion is to try this with a song that's in the key of C.  You won't have to worry about sharps and
+flats, the existing tune will be "in key" but will sound very different.
+
+The MIDI connector images used in this package were adapted from
+[WikiMedia Commons](https://commons.wikimedia.org/wiki/File:MIDI_connector2.svg) and are provided under the same terms.

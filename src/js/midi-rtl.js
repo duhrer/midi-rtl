@@ -18,7 +18,7 @@
         var payloadAsJson = flock.midi.read(payload);
         var destination = fluid.get(that, "midiOutputSelector.connection");
         if (destination) {
-            if (payloadAsJson.type === "noteOn"|| payloadAsJson.type === "noteOff") {
+            if (that.model.model === "rtl" && (payloadAsJson.type === "noteOn"|| payloadAsJson.type === "noteOff")) {
                 var invertedJsonPayload = fluid.copy(payloadAsJson);
                 invertedJsonPayload.note = 124 - invertedJsonPayload.note;
                 destination.sendRaw(flock.midi.write(invertedJsonPayload));
@@ -29,11 +29,33 @@
         }
     };
 
+    midiRtl.filterKeyPress = function (that, event) {
+        if (event.keyCode === 13) {
+            that.updateMode(event);
+        }
+    };
+
+    midiRtl.updateMode = function (that, event) {
+        event.preventDefault();
+
+        var allSelectors = that.locate("modeSelector");
+        $(allSelectors).removeClass("active");
+
+        var mode = event.currentTarget.getAttribute("mode");
+        $(event.currentTarget).addClass("active");
+        that.applier.change("mode", mode);
+    };
+
+
     fluid.defaults("midiRtl", {
         gradeNames: ["fluid.viewComponent"],
         selectors: {
             midiInputSelector:  "#input-selector",
-            midiOutputSelector: "#output-selector"
+            midiOutputSelector: "#output-selector",
+            modeSelector:       ".mode-selector"
+        },
+        model: {
+            mode: "rtl"
         },
         components: {
             enviro: "{flock.enviro}",
@@ -83,9 +105,30 @@
                 }
             }
         },
+        invokers: {
+            filterKeyPress: {
+                funcName: "midiRtl.filterKeyPress",
+                args:     ["{that}", "{arguments}.0"] // event
+            },
+            updateMode: {
+                funcName: "midiRtl.updateMode",
+                args:     ["{that}", "{arguments}.0"] // event
+            }
+
+        },
         listeners: {
             "onCreate.startEnvironment": {
                 func: "{that}.enviro.start"
+            },
+            "onCreate.bindModeSelectKeyPress": {
+                "this": "{that}.dom.modeSelector",
+                method: "keydown",
+                args:   "{that}.filterKeyPress"
+            },
+            "onCreate.bindModeSelectClick": {
+                "this": "{that}.dom.modeSelector",
+                method: "click",
+                args:   "{that}.updateMode"
             }
         }
     });
