@@ -18,7 +18,7 @@
         var payloadAsJson = flock.midi.read(payload);
         var destination = fluid.get(that, "midiOutputSelector.connection");
         if (destination) {
-            if (that.model.model === "rtl" && (payloadAsJson.type === "noteOn"|| payloadAsJson.type === "noteOff")) {
+            if (that.model.mode === "rtl" && (payloadAsJson.type === "noteOn"|| payloadAsJson.type === "noteOff")) {
                 var invertedJsonPayload = fluid.copy(payloadAsJson);
                 invertedJsonPayload.note = 124 - invertedJsonPayload.note;
                 destination.sendRaw(flock.midi.write(invertedJsonPayload));
