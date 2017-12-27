@@ -20,7 +20,8 @@
         if (destination) {
             if (that.model.mode === "rtl" && (payloadAsJson.type === "noteOn"|| payloadAsJson.type === "noteOff")) {
                 var invertedJsonPayload = fluid.copy(payloadAsJson);
-                invertedJsonPayload.note = 124 - invertedJsonPayload.note;
+                // Flip the pitch, but ensure that it's not possible to end up with a negative pitch.
+                invertedJsonPayload.note = Math.max(124 - invertedJsonPayload.note, 0);
                 destination.sendRaw(flock.midi.write(invertedJsonPayload));
             }
             else {
